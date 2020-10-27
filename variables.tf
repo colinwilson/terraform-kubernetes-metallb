@@ -2,7 +2,7 @@
 
 # Optional configuration
 variable "metallb_version" {
-    default = "0.9.3"
+    default = "0.9.4"
     type = string
-    description = "MetalLB Version e.g. 0.9.3"
+    description = "MetalLB Version e.g. 0.9.4"
 }
