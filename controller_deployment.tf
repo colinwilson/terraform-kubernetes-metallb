@@ -37,7 +37,7 @@ resource "kubernetes_deployment" "controller" {
         service_account_name = "controller"
         termination_grace_period_seconds = 0
         node_selector = {
-          "beta.kubernetes.io/os" = "linux"
+          "kubernetes.io/os" = "linux"
         }
         security_context {
             run_as_non_root = true

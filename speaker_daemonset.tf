@@ -36,7 +36,7 @@ resource "kubernetes_daemonset" "speaker" {
         termination_grace_period_seconds = 2
         host_network = true
         node_selector = {
-          "beta.kubernetes.io/os" = "linux"
+          "kubernetes.io/os" = "linux"
         }
 
         toleration {
