@@ -2,7 +2,7 @@
 resource "kubernetes_deployment" "controller" {
   metadata {
     labels = {
-      app = "metallb"
+      app       = "metallb"
       component = "controller"
     }
     name      = "controller"
@@ -14,7 +14,7 @@ resource "kubernetes_deployment" "controller" {
 
     selector {
       match_labels = {
-        app = "metallb"
+        app       = "metallb"
         component = "controller"
       }
     }
@@ -22,31 +22,31 @@ resource "kubernetes_deployment" "controller" {
     template {
       metadata {
         annotations = {
-          "prometheus.io/port" = "7472"
+          "prometheus.io/port"   = "7472"
           "prometheus.io/scrape" = "true"
         }
         labels = {
-          app = "metallb"
+          app       = "metallb"
           component = "controller"
         }
       }
 
       spec {
 
-        automount_service_account_token = true # override Terraform's default false - https://github.com/kubernetes/kubernetes/issues/27973#issuecomment-462185284
-        service_account_name = "controller"
+        automount_service_account_token  = true # override Terraform's default false - https://github.com/kubernetes/kubernetes/issues/27973#issuecomment-462185284
+        service_account_name             = "controller"
         termination_grace_period_seconds = 0
         node_selector = {
           "kubernetes.io/os" = "linux"
         }
         security_context {
-            run_as_non_root = true
-            run_as_user = 65534
+          run_as_non_root = true
+          run_as_user     = 65534
         }
 
         container {
-          name  = "controller"
-          image = "metallb/controller:v${var.metallb_version}"
+          name              = "controller"
+          image             = "metallb/controller:v${var.metallb_version}"
           image_pull_policy = "Always"
 
           args = [
@@ -62,7 +62,7 @@ resource "kubernetes_deployment" "controller" {
           }
 
           port {
-            name = "monitoring"
+            name           = "monitoring"
             container_port = 7472
           }
 

@@ -4,7 +4,7 @@ resource "kubernetes_service_account" "controller" {
     labels = {
       app = "metallb"
     }
-    name = "controller"
+    name      = "controller"
     namespace = kubernetes_namespace.metallb_system.metadata.0.name
   }
 }
@@ -15,7 +15,7 @@ resource "kubernetes_service_account" "speaker" {
     labels = {
       app = "metallb"
     }
-    name = "speaker"
+    name      = "speaker"
     namespace = kubernetes_namespace.metallb_system.metadata.0.name
   }
 }

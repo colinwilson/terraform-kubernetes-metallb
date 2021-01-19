@@ -4,14 +4,14 @@ resource "kubernetes_role" "config_watcher" {
     labels = {
       app = "metallb"
     }
-    name = "config-watcher"
+    name      = "config-watcher"
     namespace = kubernetes_namespace.metallb_system.metadata.0.name
   }
 
   rule {
-    api_groups     = [""]
-    resources      = ["configmaps"]
-    verbs          = ["get", "list", "watch"]
+    api_groups = [""]
+    resources  = ["configmaps"]
+    verbs      = ["get", "list", "watch"]
   }
 }
 
@@ -21,13 +21,13 @@ resource "kubernetes_role" "pod_lister" {
     labels = {
       app = "metallb"
     }
-    name = "pod-lister"
+    name      = "pod-lister"
     namespace = kubernetes_namespace.metallb_system.metadata.0.name
   }
 
   rule {
-    api_groups     = [""]
-    resources      = ["pods"]
-    verbs          = ["list"]
+    api_groups = [""]
+    resources  = ["pods"]
+    verbs      = ["list"]
   }
 }

@@ -4,7 +4,7 @@ resource "kubernetes_role_binding" "config_watcher" {
     labels = {
       app = "metallb"
     }
-    name = "config-watcher"
+    name      = "config-watcher"
     namespace = kubernetes_namespace.metallb_system.metadata.0.name
   }
 
@@ -31,7 +31,7 @@ resource "kubernetes_role_binding" "pod_lister" {
     labels = {
       app = "metallb"
     }
-    name = "pod-lister"
+    name      = "pod-lister"
     namespace = kubernetes_namespace.metallb_system.metadata.0.name
   }
 

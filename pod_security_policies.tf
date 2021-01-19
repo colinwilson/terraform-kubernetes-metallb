@@ -4,12 +4,12 @@ resource "kubernetes_pod_security_policy" "controller" {
     labels = {
       app = "metallb"
     }
-    name      = "controller"
+    name = "controller"
     #namespace = "metallb-system"
   }
   spec {
-    allow_privilege_escalation         = false
-    allowed_capabilities               = []
+    allow_privilege_escalation = false
+    allowed_capabilities       = []
     #allowed_host_paths {}
     default_add_capabilities           = []
     default_allow_privilege_escalation = false
@@ -22,11 +22,11 @@ resource "kubernetes_pod_security_policy" "controller" {
       rule = "MustRunAs"
     }
 
-    host_ipc = false
-    host_network = false
-    host_pid = false
-    privileged = false
-    read_only_root_filesystem = true
+    host_ipc                   = false
+    host_network               = false
+    host_pid                   = false
+    privileged                 = false
+    read_only_root_filesystem  = true
     required_drop_capabilities = ["ALL"]
 
     run_as_user {
@@ -63,12 +63,12 @@ resource "kubernetes_pod_security_policy" "speaker" {
     labels = {
       app = "metallb"
     }
-    name      = "speaker"
+    name = "speaker"
     #namespace = "metallb-system"
   }
   spec {
-    allow_privilege_escalation         = false
-    allowed_capabilities               = ["NET_ADMIN","NET_RAW","SYS_ADMIN"]
+    allow_privilege_escalation = false
+    allowed_capabilities       = ["NET_ADMIN", "NET_RAW", "SYS_ADMIN"]
     #allowed_host_paths {}
     default_add_capabilities           = []
     default_allow_privilege_escalation = false
@@ -77,17 +77,17 @@ resource "kubernetes_pod_security_policy" "speaker" {
       rule = "RunAsAny"
     }
 
-    host_ipc = false
+    host_ipc     = false
     host_network = true
-    host_pid = false
+    host_pid     = false
 
     host_ports {
       max = 7472
       min = 7472
     }
 
-    privileged = true
-    read_only_root_filesystem = true
+    privileged                 = true
+    read_only_root_filesystem  = true
     required_drop_capabilities = ["ALL"]
 
     run_as_user {

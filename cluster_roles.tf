@@ -29,10 +29,10 @@ resource "kubernetes_cluster_role" "controller" {
   }
 
   rule {
-    api_groups = ["policy"]
+    api_groups     = ["policy"]
     resource_names = ["controller"]
-    resources  = ["podsecuritypolicies"]
-    verbs      = ["use"]
+    resources      = ["podsecuritypolicies"]
+    verbs          = ["use"]
 
   }
 }
@@ -61,10 +61,10 @@ resource "kubernetes_cluster_role" "speaker" {
   }
 
   rule {
-    api_groups = ["policy"]
+    api_groups     = ["policy"]
     resource_names = ["speaker"]
-    resources  = ["podsecuritypolicies"]
-    verbs      = ["use"]
+    resources      = ["podsecuritypolicies"]
+    verbs          = ["use"]
 
   }
 }

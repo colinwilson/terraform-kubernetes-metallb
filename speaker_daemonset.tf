@@ -2,7 +2,7 @@
 resource "kubernetes_daemonset" "speaker" {
   metadata {
     labels = {
-      app = "metallb"
+      app       = "metallb"
       component = "speaker"
     }
     name      = "speaker"
@@ -12,7 +12,7 @@ resource "kubernetes_daemonset" "speaker" {
   spec {
     selector {
       match_labels = {
-        app = "metallb"
+        app       = "metallb"
         component = "speaker"
       }
     }
@@ -20,33 +20,33 @@ resource "kubernetes_daemonset" "speaker" {
     template {
       metadata {
         annotations = {
-          "prometheus.io/port" = "7472"
+          "prometheus.io/port"   = "7472"
           "prometheus.io/scrape" = "true"
         }
         labels = {
-          app = "metallb"
+          app       = "metallb"
           component = "speaker"
         }
       }
 
       spec {
 
-        automount_service_account_token = true # override Terraform's default false - https://github.com/kubernetes/kubernetes/issues/27973#issuecomment-462185284
-        service_account_name = "speaker"
+        automount_service_account_token  = true # override Terraform's default false - https://github.com/kubernetes/kubernetes/issues/27973#issuecomment-462185284
+        service_account_name             = "speaker"
         termination_grace_period_seconds = 2
-        host_network = true
+        host_network                     = true
         node_selector = {
           "kubernetes.io/os" = "linux"
         }
 
         toleration {
-          key = "node-role.kubernetes.io/master"
+          key    = "node-role.kubernetes.io/master"
           effect = "NoSchedule"
         }
 
         container {
-          name  = "speaker"
-          image = "metallb/speaker:v${var.metallb_version}"
+          name              = "speaker"
+          image             = "metallb/speaker:v${var.metallb_version}"
           image_pull_policy = "Always"
 
           args = [
@@ -82,7 +82,7 @@ resource "kubernetes_daemonset" "speaker" {
           }
 
           env {
-            name = "METALLB_ML_LABELS"
+            name  = "METALLB_ML_LABELS"
             value = "app=metallb,component=speaker"
           }
 
@@ -100,13 +100,13 @@ resource "kubernetes_daemonset" "speaker" {
             value_from {
               secret_key_ref {
                 name = "memberlist"
-                key = "secretkey"
+                key  = "secretkey"
               }
             }
           }
 
           port {
-            name = "monitoring"
+            name           = "monitoring"
             container_port = 7472
           }
 
@@ -120,7 +120,7 @@ resource "kubernetes_daemonset" "speaker" {
           security_context {
             allow_privilege_escalation = false
             capabilities {
-              add = ["NET_ADMIN", "NET_RAW", "SYS_ADMIN"]
+              add  = ["NET_ADMIN", "NET_RAW", "SYS_ADMIN"]
               drop = ["ALL"]
             }
             read_only_root_filesystem = true
