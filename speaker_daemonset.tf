@@ -111,7 +111,7 @@ resource "kubernetes_daemonset" "speaker" {
           }
 
           resources {
-            requests {
+            requests = {
               cpu    = "100m"
               memory = "100Mi"
             }
