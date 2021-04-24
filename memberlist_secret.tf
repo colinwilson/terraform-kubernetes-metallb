@@ -1,6 +1,6 @@
 # Create memberlist communications secretkey
 resource "random_password" "memberlist_secretkey" {
-  length = 128 # WARNING! Output shown in console!
+  length = 128
 }
 
 resource "kubernetes_secret" "memberlist" {
