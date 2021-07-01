@@ -42,12 +42,12 @@ resource "kubernetes_daemonset" "speaker" {
         toleration {
           key    = "node-role.kubernetes.io/master"
           effect = "NoSchedule"
+          operator = "Exists"
         }
 
         container {
           name              = "speaker"
-          image             = "metallb/speaker:v${var.metallb_version}"
-          image_pull_policy = "Always"
+          image             = "quay.io/metallb/speaker:v${var.metallb_version}"
 
           args = [
             "--port=7472",
@@ -87,15 +87,6 @@ resource "kubernetes_daemonset" "speaker" {
           }
 
           env {
-            name = "METALLB_ML_NAMESPACE"
-            value_from {
-              field_ref {
-                field_path = "metadata.namespace"
-              }
-            }
-          }
-
-          env {
             name = "METALLB_ML_SECRET_KEY"
             value_from {
               secret_key_ref {
@@ -111,17 +102,23 @@ resource "kubernetes_daemonset" "speaker" {
             host_port      = 7472
           }
 
-          resources {
-            requests = {
-              cpu    = "100m"
-              memory = "100Mi"
-            }
+          port {
+            name           = "memberlist-tcp"
+            container_port = 7946
+            # host_port      = 7946
+          }
+
+          port {
+            name           = "memberlist-udp"
+            protocol = "UDP"
+            container_port = 7946
+            # host_port      = 7946
           }
 
           security_context {
             allow_privilege_escalation = false
             capabilities {
-              add  = ["NET_ADMIN", "NET_RAW", "SYS_ADMIN"]
+              add  = ["NET_RAW"]
               drop = ["ALL"]
             }
             read_only_root_filesystem = true

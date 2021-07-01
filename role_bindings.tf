@@ -47,3 +47,26 @@ resource "kubernetes_role_binding" "pod_lister" {
     namespace = kubernetes_namespace.metallb_system.metadata.0.name
   }
 }
+
+# Create Controller Role Binding
+resource "kubernetes_role_binding" "controller" {
+  metadata {
+    labels = {
+      app = "metallb"
+    }
+    name      = "controller"
+    namespace = kubernetes_namespace.metallb_system.metadata.0.name
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "controller"
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = kubernetes_service_account.controller.metadata.0.name
+    namespace = kubernetes_namespace.metallb_system.metadata.0.name
+  }
+}

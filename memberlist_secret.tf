@@ -1,15 +1,18 @@
 # Create memberlist communications secretkey
-resource "random_password" "memberlist_secretkey" {
-  length = 128
-}
+# No longer required since v0.10.0
+# See - https://metallb.universe.tf/release-notes/#version-0-10-0
 
-resource "kubernetes_secret" "memberlist" {
-  metadata {
-    name      = "memberlist"
-    namespace = kubernetes_namespace.metallb_system.metadata.0.name
-  }
+# resource "random_password" "memberlist_secretkey" {
+#   length = 128
+# }
 
-  data = {
-    secretkey = base64encode(random_password.memberlist_secretkey.result)
-  }
-}
+# resource "kubernetes_secret" "memberlist" {
+#   metadata {
+#     name      = "memberlist"
+#     namespace = kubernetes_namespace.metallb_system.metadata.0.name
+#   }
+
+#   data = {
+#     secretkey = base64encode(random_password.memberlist_secretkey.result)
+#   }
+# }

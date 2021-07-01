@@ -47,19 +47,21 @@ resource "kubernetes_deployment" "controller" {
 
         container {
           name              = "controller"
-          image             = "metallb/controller:v${var.metallb_version}"
-          image_pull_policy = "Always"
+          image             = "quay.io/metallb/controller:v${var.metallb_version}"
 
           args = [
             "--port=7472",
             "--config=config",
           ]
 
-          resources {
-            requests = {
-              cpu    = "100m"
-              memory = "100Mi"
-            }
+          env {
+            name = "METALLB_ML_SECRET_NAME"
+            value = "memberlist"
+          }
+
+          env {
+            name = "METALLB_DEPLOYMENT"
+            value = "controller"
           }
 
           port {

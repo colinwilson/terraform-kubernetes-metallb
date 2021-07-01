@@ -10,7 +10,7 @@ resource "kubernetes_cluster_role" "controller" {
   rule {
     api_groups = [""]
     resources  = ["services"]
-    verbs      = ["get", "list", "watch", "update"]
+    verbs      = ["get", "list", "watch"]
 
   }
 
@@ -49,6 +49,13 @@ resource "kubernetes_cluster_role" "speaker" {
   rule {
     api_groups = [""]
     resources  = ["services", "endpoints", "nodes"]
+    verbs      = ["get", "list", "watch"]
+
+  }
+
+  rule {
+    api_groups = ["discovery.k8s.io"]
+    resources  = ["endpointslices"]
     verbs      = ["get", "list", "watch"]
 
   }

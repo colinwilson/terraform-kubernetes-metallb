@@ -31,3 +31,33 @@ resource "kubernetes_role" "pod_lister" {
     verbs      = ["list"]
   }
 }
+
+resource "kubernetes_role" "controller" {
+  metadata {
+    labels = {
+      app = "metallb"
+    }
+    name      = "controller"
+    namespace = kubernetes_namespace.metallb_system.metadata.0.name
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["secrets"]
+    verbs      = ["create"]
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["secrets"]
+    resource_names = ["memberlist"]
+    verbs      = ["list"]
+  }
+
+  rule {
+    api_groups = ["apps"]
+    resources  = ["deployments"]
+    resource_names = ["controller"]
+    verbs      = ["get"]
+  }
+}
