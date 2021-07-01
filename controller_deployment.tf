@@ -46,8 +46,8 @@ resource "kubernetes_deployment" "controller" {
         }
 
         container {
-          name              = "controller"
-          image             = "quay.io/metallb/controller:v${var.metallb_version}"
+          name  = "controller"
+          image = "quay.io/metallb/controller:v${var.metallb_version}"
 
           args = [
             "--port=7472",
@@ -55,12 +55,12 @@ resource "kubernetes_deployment" "controller" {
           ]
 
           env {
-            name = "METALLB_ML_SECRET_NAME"
+            name  = "METALLB_ML_SECRET_NAME"
             value = "memberlist"
           }
 
           env {
-            name = "METALLB_DEPLOYMENT"
+            name  = "METALLB_DEPLOYMENT"
             value = "controller"
           }
 

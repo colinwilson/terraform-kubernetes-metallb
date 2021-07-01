@@ -48,16 +48,16 @@ resource "kubernetes_role" "controller" {
   }
 
   rule {
-    api_groups = [""]
-    resources  = ["secrets"]
+    api_groups     = [""]
+    resources      = ["secrets"]
     resource_names = ["memberlist"]
-    verbs      = ["list"]
+    verbs          = ["list"]
   }
 
   rule {
-    api_groups = ["apps"]
-    resources  = ["deployments"]
+    api_groups     = ["apps"]
+    resources      = ["deployments"]
     resource_names = ["controller"]
-    verbs      = ["get"]
+    verbs          = ["get"]
   }
 }

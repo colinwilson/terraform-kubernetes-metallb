@@ -40,14 +40,14 @@ resource "kubernetes_daemonset" "speaker" {
         }
 
         toleration {
-          key    = "node-role.kubernetes.io/master"
-          effect = "NoSchedule"
+          key      = "node-role.kubernetes.io/master"
+          effect   = "NoSchedule"
           operator = "Exists"
         }
 
         container {
-          name              = "speaker"
-          image             = "quay.io/metallb/speaker:v${var.metallb_version}"
+          name  = "speaker"
+          image = "quay.io/metallb/speaker:v${var.metallb_version}"
 
           args = [
             "--port=7472",
@@ -110,7 +110,7 @@ resource "kubernetes_daemonset" "speaker" {
 
           port {
             name           = "memberlist-udp"
-            protocol = "UDP"
+            protocol       = "UDP"
             container_port = 7946
             # host_port      = 7946
           }
